@@ -13,7 +13,7 @@ Input and airfoil .dat file to analyze the _**C<sub>p</sub>**_ distribution as w
 4. At the tob, a tab labeled "Panel View" provides a view of the airfoil as well as the _**C<sub>p</sub>**_ distribution.
 5. Enter and angle of attack value or use the slider to select a value. The plots will update based on the selection.
 
-![Alt text](/ccreenshots/LQR_ROS.gif?raw=true "LQR Controller Running in Gazebo")
+![Alt text](/screenshots/LQR_ROS.gif?raw=true "LQR Controller Running in Gazebo")
 
 
 ## Getting Started
