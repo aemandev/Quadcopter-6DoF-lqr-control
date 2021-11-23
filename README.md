@@ -1,17 +1,16 @@
 # Quadcopter-6DoF-lqr-control
 
-This app allows users to input an airfoil datafile and analyze the pressure distribution of an airfoil using the constant strength vortex panel method. Results are displayed graphically in the MATLAB application.
+This repository holds the files for a linear quadratic regulator (LQR) flight controller that was devloped for a quadcopter. The controller uses full 12 state feedback and controls all 6 degrees of freedom. The sensors within the Hummingbird plant in Gazebo are used for state estimation and feedback.
 
 ## Description
 
-Input and airfoil .dat file to analyze the _**C<sub>p</sub>**_ distribution as well as _**C<sub>L</sub>**_ and _**C<sub>M</sub>**_. To get started, download and open _airfoilApp.mlapp_.
+The flight controller was developed for and linearized about hover. The quadcopter dynamics were linearized to allow for the use of optimal control techniques, such as the LQR controller that is presented here. 
 
-1. Navigate to the directory containing your airfoil .dat files:
-2. Select the airfoil file that is desired and click "Upload".
-3. Enter the number of panels desired or use the slider bar to change the panel discretization.
-   * Note: The max number of panels is constrained to the number of datapoints in the .dat file. The software does not interpolate between panel coordinate indices.
-4. At the tob, a tab labeled "Panel View" provides a view of the airfoil as well as the _**C<sub>p</sub>**_ distribution.
-5. Enter and angle of attack value or use the slider to select a value. The plots will update based on the selection.
+It should be noted that since the states were linearized about the hover condition, large set point changes will cause the quadcopter to become unstable. This is expected since the linearization only holds true for some deviations from the desired setpoint. Likewise, large yaw angle commands will also cause some instability, as this violates the small angle approximation that was used during the linearization process. 
+
+Despite these caveats, the LQR controller does remarkably well at holding the quadcopter in hover and converges onto small setpoint changes with minimal overshoot and error. The control law was ported to a ROS node using MATLAB's embedded coder package. Once exported, the flight controller can be used just like any other ROS node. 
+
+To command the quadcopter setpoints, a Simulink file is used which is connected directly to the ROS master. The Simulink model is used to send pose commands to the _./command/pose topic_. From this point, the flight controller interprets the message and calculates the necessary control inputs to reach the desired setpoint. The GIF below displays a demonstration of the LQR controller running in Gazebo that is controlled with the aforementioned Simulink model.
 
 ![Alt text](/screenshots/LQR_ROS.gif?raw=true "LQR Controller Running in Gazebo")
 
@@ -21,13 +20,18 @@ Input and airfoil .dat file to analyze the _**C<sub>p</sub>**_ distribution as w
 ### Dependencies
 
 * MATLAB
+* ROS
+* Ubuntu 14.04
+* Gazebo
+* Simulink
+* Robot Operating System (ROS) Support from ROS Toolbox
 
 ### Installing
 
 
 ### Executing program
 
-* run airfoilApp.mlapp
+* 
 
 ## Authors
 
